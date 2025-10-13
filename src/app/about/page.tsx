@@ -4,8 +4,8 @@ import Breadcrumbs from '@/components/ui/Breadcrumbs'
 import Button from '@/components/ui/Button'
 
 export const metadata = {
-  title: 'About Us - OTL Motor Parts',
-  description: 'Learn about OTL Motor Parts - your trusted source for quality automotive parts and accessories.',
+  title: 'About Us - Obijons Trade Link Limited',
+  description: 'Learn about Obijons Trade Link Limited - your trusted source for quality automotive parts and accessories.',
 }
 
 export default function AboutPage() {
@@ -16,9 +16,9 @@ export default function AboutPage() {
 
         {/* Hero Section */}
         <div className="bg-white rounded-lg shadow-md p-8 md:p-12 mb-8">
-          <h1 className="text-4xl font-bold mb-6">About OTL Motor Parts</h1>
+          <h1 className="text-4xl font-bold mb-6">About Obijons Trade Link Limited</h1>
           <p className="text-xl text-neutral-700 leading-relaxed mb-6">
-            For over two decades, OTL Motor Parts has been the trusted source for quality
+            For over two decades, Obijons Trade Link Limited has been the trusted source for quality
             automotive parts and accessories. We're dedicated to providing auto repair shops,
             mechanics, and car enthusiasts with the parts they need at competitive prices.
           </p>

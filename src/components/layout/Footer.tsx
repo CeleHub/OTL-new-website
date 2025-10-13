@@ -31,7 +31,7 @@ export default function Footer() {
               <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
                 OTL
               </div>
-              <div className="font-bold text-xl text-white">OTL Motor Parts</div>
+              <div className="font-bold text-xl text-white">Obijons Trade Link Limited</div>
             </div>
             <p className="text-sm mb-4">{companyInfo.tagline}</p>
             <div className="space-y-2 text-sm">
@@ -110,7 +110,7 @@ export default function Footer() {
         <div className="border-t border-neutral-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm">
-              © {new Date().getFullYear()} OTL Motor Parts. All rights reserved.
+              © {new Date().getFullYear()} Obijons Trade Link Limited. All rights reserved.
             </p>
             <div className="flex space-x-6">
               <a

@@ -1,4 +1,4 @@
-# OTL Motor Parts - Automotive Parts Catalog
+# Obijons Trade Link Limited - Automotive Parts Catalog
 
 A modern, responsive automotive parts catalog website built with Next.js, React, and TypeScript.
 

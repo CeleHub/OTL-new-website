@@ -12,6 +12,7 @@ export default function Header() {
     { name: 'Products', href: '/products' },
     { name: 'Categories', href: '/categories' },
     { name: 'About', href: '/about' },
+    { name: 'FAQ', href: '/faq' },
     { name: 'Contact', href: '/contact' },
   ]
 
@@ -48,7 +49,7 @@ export default function Header() {
               OTL
             </div>
             <div className="hidden sm:block">
-              <div className="font-bold text-xl text-neutral-900">OTL Motor Parts</div>
+              <div className="font-bold text-xl text-neutral-900">Obijons Trade Link Limited</div>
               <div className="text-xs text-neutral-600">{companyInfo.tagline}</div>
             </div>
           </Link>
