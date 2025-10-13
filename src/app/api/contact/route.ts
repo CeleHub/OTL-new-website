@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { contactFormSchema } from '@/lib/validations'
+import { sendContactFormEmail } from '@/lib/email'
 
 export async function POST(request: NextRequest) {
   try {
@@ -8,31 +9,24 @@ export async function POST(request: NextRequest) {
     // Validate the data
     const validatedData = contactFormSchema.parse(body)
     
-    // In a real application, you would:
-    // 1. Send an email using Nodemailer or similar
-    // 2. Save to a database
-    // 3. Integrate with a CRM
+    // Send email notification
+    const emailSent = await sendContactFormEmail(validatedData)
     
-    // For now, just log it (in production, this would be removed)
-    console.log('Contact form submission:', validatedData)
+    if (!emailSent) {
+      console.error('Failed to send contact form email')
+      return NextResponse.json(
+        { error: 'Failed to send email notification' },
+        { status: 500 }
+      )
+    }
     
-    // Simulate email sending
-    // const nodemailer = require('nodemailer')
-    // const transporter = nodemailer.createTransporter({ ... })
-    // await transporter.sendMail({
-    //   from: process.env.SMTP_FROM,
-    //   to: process.env.CONTACT_EMAIL,
-    //   subject: `Contact Form: ${validatedData.subject}`,
-    //   html: `
-    //     <h2>New Contact Form Submission</h2>
-    //     <p><strong>Name:</strong> ${validatedData.name}</p>
-    //     <p><strong>Email:</strong> ${validatedData.email}</p>
-    //     <p><strong>Phone:</strong> ${validatedData.phone}</p>
-    //     <p><strong>Subject:</strong> ${validatedData.subject}</p>
-    //     <p><strong>Message:</strong></p>
-    //     <p>${validatedData.message}</p>
-    //   `,
-    // })
+    // Log successful submission (optional)
+    console.log('Contact form submitted successfully:', {
+      name: validatedData.name,
+      email: validatedData.email,
+      subject: validatedData.subject,
+      timestamp: new Date().toISOString()
+    })
     
     return NextResponse.json(
       { message: 'Contact form submitted successfully' },

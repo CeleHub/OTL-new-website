@@ -8,6 +8,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navigation = [
+    { name: 'Home', href: '/' },
     { name: 'Products', href: '/products' },
     { name: 'Categories', href: '/categories' },
     { name: 'About', href: '/about' },
@@ -17,14 +18,17 @@ export default function Header() {
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
       {/* Top Bar */}
-      <div className="bg-primary-700 text-white">
+      <div className="bg-primary-600 text-white">
         <div className="container">
           <div className="flex justify-between items-center py-2 text-sm">
             <div className="flex items-center space-x-4">
               <a href={`tel:${companyInfo.phone}`} className="hover:text-primary-200">
                 📞 {companyInfo.phone}
               </a>
-              <a href={`mailto:${companyInfo.email}`} className="hover:text-primary-200 hidden sm:block">
+              <a href={companyInfo.social.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-primary-200 hidden sm:block">
+                💬 WhatsApp
+              </a>
+              <a href={`mailto:${companyInfo.email}`} className="hover:text-primary-200 hidden md:block">
                 ✉️ {companyInfo.email}
               </a>
             </div>

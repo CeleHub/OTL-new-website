@@ -74,7 +74,7 @@ export default function AboutPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/products">
-              <Button size="lg" className="bg-white text-primary-700 hover:bg-neutral-100">
+              <Button size="lg" className="bg-white text-primary-600 hover:bg-neutral-100">
                 Browse Products
               </Button>
             </Link>

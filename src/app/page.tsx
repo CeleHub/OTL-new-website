@@ -3,6 +3,7 @@ import { products, categories } from '@/lib/data/products'
 import ProductCard from '@/components/products/ProductCard'
 import CategoryCard from '@/components/products/CategoryCard'
 import Button from '@/components/ui/Button'
+import WhatsAppButton from '@/components/ui/WhatsAppButton'
 
 export default function Home() {
   const featuredProducts = products.filter(p => p.featured).slice(0, 6)
@@ -21,7 +22,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/products">
-                <Button size="lg" className="bg-white text-primary-700 hover:bg-neutral-100">
+                <Button size="lg" className="bg-white text-primary-600 hover:bg-neutral-100">
                   Browse All Parts
                 </Button>
               </Link>
@@ -115,12 +116,21 @@ export default function Home() {
             Our team is ready to help you find the perfect part for your vehicle
           </p>
           <Link href="/contact">
-            <Button size="lg" className="bg-white text-primary-700 hover:bg-neutral-100">
+            <Button size="lg" className="bg-white text-primary-600 hover:bg-neutral-100">
               Contact Us Today
             </Button>
           </Link>
         </div>
       </section>
+
+      {/* Floating WhatsApp Button */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <WhatsAppButton 
+          message="Hello! I'm interested in your automotive parts. Can you help me find what I need?"
+          variant="icon"
+          className="shadow-lg hover:shadow-xl"
+        />
+      </div>
     </div>
   )
 }

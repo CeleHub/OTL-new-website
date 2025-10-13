@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { rfqFormSchema } from '@/lib/validations'
+import { sendRFQFormEmail } from '@/lib/email'
 
 export async function POST(request: NextRequest) {
   try {
@@ -8,34 +9,25 @@ export async function POST(request: NextRequest) {
     // Validate the data
     const validatedData = rfqFormSchema.parse(body)
     
-    // In a real application, you would:
-    // 1. Send an email using Nodemailer or similar
-    // 2. Save to a database
-    // 3. Generate a quote
-    // 4. Integrate with inventory system
+    // Send email notification
+    const emailSent = await sendRFQFormEmail(validatedData)
     
-    // For now, just log it (in production, this would be removed)
-    console.log('RFQ submission:', validatedData)
+    if (!emailSent) {
+      console.error('Failed to send RFQ form email')
+      return NextResponse.json(
+        { error: 'Failed to send email notification' },
+        { status: 500 }
+      )
+    }
     
-    // Simulate email sending
-    // const nodemailer = require('nodemailer')
-    // const transporter = nodemailer.createTransporter({ ... })
-    // await transporter.sendMail({
-    //   from: process.env.SMTP_FROM,
-    //   to: process.env.CONTACT_EMAIL,
-    //   subject: `RFQ: ${validatedData.productName}`,
-    //   html: `
-    //     <h2>New Quote Request</h2>
-    //     <p><strong>Product:</strong> ${validatedData.productName} (${validatedData.productId})</p>
-    //     <p><strong>Quantity:</strong> ${validatedData.quantity}</p>
-    //     <hr>
-    //     <p><strong>Name:</strong> ${validatedData.name}</p>
-    //     <p><strong>Email:</strong> ${validatedData.email}</p>
-    //     <p><strong>Phone:</strong> ${validatedData.phone}</p>
-    //     ${validatedData.company ? `<p><strong>Company:</strong> ${validatedData.company}</p>` : ''}
-    //     ${validatedData.message ? `<p><strong>Message:</strong> ${validatedData.message}</p>` : ''}
-    //   `,
-    // })
+    // Log successful submission (optional)
+    console.log('RFQ submitted successfully:', {
+      name: validatedData.name,
+      email: validatedData.email,
+      productName: validatedData.productName,
+      quantity: validatedData.quantity,
+      timestamp: new Date().toISOString()
+    })
     
     return NextResponse.json(
       { message: 'Quote request submitted successfully' },

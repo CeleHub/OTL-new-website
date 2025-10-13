@@ -57,13 +57,38 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 Create a `.env.local` file in the root directory:
 
-```
-SMTP_HOST=your_smtp_host
+```bash
+# Email Configuration
+SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=your_email@example.com
-SMTP_PASS=your_password
-CONTACT_EMAIL=contact@yourcompany.com
+SMTP_USER=okonzcelestine1@gmail.com
+SMTP_PASS=your_app_password_here
+CONTACT_EMAIL=okonzcelestine1@gmail.com
+SMTP_FROM=okonzcelestine1@gmail.com
 ```
+
+### Email Setup Instructions
+
+**For Gmail (Recommended):**
+
+1. **Enable 2-Factor Authentication** on your Google account
+2. **Generate an App Password:**
+   - Go to Google Account settings
+   - Security → 2-Step Verification → App passwords
+   - Generate a password for "Mail"
+   - Copy the 16-character password
+3. **Update `.env.local`:**
+   - Replace `your_app_password_here` with the generated app password
+   - Keep `SMTP_USER` as `okonzcelestine1@gmail.com`
+
+**For Other Email Providers:**
+- Update `SMTP_HOST` and `SMTP_PORT` accordingly
+- Use your email provider's SMTP credentials
+
+**Testing Email:**
+- Start the development server: `npm run dev`
+- Submit a contact form or RFQ form
+- Check your email inbox for notifications
 
 ## Deployment
 

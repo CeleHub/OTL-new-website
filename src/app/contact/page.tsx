@@ -1,6 +1,7 @@
 import { companyInfo } from '@/lib/data/content'
 import Breadcrumbs from '@/components/ui/Breadcrumbs'
 import ContactForm from '@/components/forms/ContactForm'
+import WhatsAppButton from '@/components/ui/WhatsAppButton'
 
 export const metadata = {
   title: 'Contact Us - OTL Motor Parts',
@@ -38,6 +39,18 @@ export default function ContactPage() {
                 </div>
 
                 <div>
+                  <h3 className="font-medium text-neutral-900 mb-1">WhatsApp</h3>
+                  <a
+                    href={companyInfo.social.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary-600 hover:text-primary-700"
+                  >
+                    {companyInfo.whatsapp}
+                  </a>
+                </div>
+
+                <div>
                   <h3 className="font-medium text-neutral-900 mb-1">Email</h3>
                   <a
                     href={`mailto:${companyInfo.email}`}
@@ -71,6 +84,27 @@ export default function ContactPage() {
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow-md p-8">
               <h2 className="text-2xl font-semibold mb-6">Send Us a Message</h2>
+              
+              {/* Quick Contact Options */}
+              <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-200">
+                <h3 className="font-semibold text-green-800 mb-3">Quick Contact Options</h3>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <WhatsAppButton 
+                    message="Hello! I'm interested in your automotive parts. Can you help me find what I need?"
+                    size="md"
+                    className="flex-1"
+                  >
+                    💬 Chat on WhatsApp
+                  </WhatsAppButton>
+                  <a
+                    href={`tel:${companyInfo.phone}`}
+                    className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors"
+                  >
+                    📞 Call Now
+                  </a>
+                </div>
+              </div>
+              
               <ContactForm />
             </div>
           </div>
