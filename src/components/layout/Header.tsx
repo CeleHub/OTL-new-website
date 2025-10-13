@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import { companyInfo } from '@/lib/data/content'
 
@@ -44,13 +45,20 @@ export default function Header() {
       <div className="container">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-              OTL
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="w-12 h-12 relative">
+              <Image
+                src="/images/logo.png"
+                alt="OBIJONS TRADE LINK LIMITED Logo"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain"
+                priority
+              />
             </div>
-            <div className="hidden sm:block">
-              <div className="font-bold text-xl text-neutral-900">Obijons Trade Link Limited</div>
-              <div className="text-xs text-neutral-600">{companyInfo.tagline}</div>
+            <div className="block">
+              <div className="font-bold text-sm sm:text-xl text-neutral-900">OBIJONS TRADE LINK LIMITED</div>
+              <div className="text-xs text-neutral-600 hidden sm:block">{companyInfo.tagline}</div>
             </div>
           </Link>
 

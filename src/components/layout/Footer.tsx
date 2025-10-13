@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { companyInfo } from '@/lib/data/content'
 
 export default function Footer() {
@@ -27,11 +28,17 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-                OTL
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-12 h-12 relative">
+                <Image
+                  src="/images/logo.png"
+                  alt="OBIJONS TRADE LINK LIMITED Logo"
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <div className="font-bold text-xl text-white">Obijons Trade Link Limited</div>
+              <div className="font-bold text-xl text-white">OBIJONS TRADE LINK LIMITED</div>
             </div>
             <p className="text-sm mb-4">{companyInfo.tagline}</p>
             <div className="space-y-2 text-sm">
@@ -110,7 +117,7 @@ export default function Footer() {
         <div className="border-t border-neutral-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm">
-              © {new Date().getFullYear()} Obijons Trade Link Limited. All rights reserved.
+              © {new Date().getFullYear()} OBIJONS TRADE LINK LIMITED. All rights reserved.
             </p>
             <div className="flex space-x-6">
               <a

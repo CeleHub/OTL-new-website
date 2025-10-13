@@ -11,12 +11,12 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Obijons Trade Link Limited - Quality Automotive Parts & Accessories',
+  title: 'OBIJONS TRADE LINK LIMITED - Quality Automotive Parts & Accessories',
   description: 'Find quality automotive parts and accessories for all makes and models. Expert service, competitive prices, and fast shipping.',
   keywords: 'automotive parts, motor parts, car parts, auto accessories, OEM parts',
-  authors: [{ name: 'Obijons Trade Link Limited' }],
+  authors: [{ name: 'OBIJONS TRADE LINK LIMITED' }],
   openGraph: {
-    title: 'Obijons Trade Link Limited - Quality Automotive Parts',
+    title: 'OBIJONS TRADE LINK LIMITED - Quality Automotive Parts',
     description: 'Find quality automotive parts and accessories for all makes and models.',
     type: 'website',
   },

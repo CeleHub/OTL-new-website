@@ -1,5 +1,5 @@
 export const companyInfo = {
-  name: 'Obijons Trade Link Limited',
+  name: 'OBIJONS TRADE LINK LIMITED',
   tagline: 'Quality Automotive Parts & Accessories',
   phone: '+234-803-377-0318',
   whatsapp: '+234-803-377-0318',

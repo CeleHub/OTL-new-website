@@ -1,4 +1,4 @@
-# Obijons Trade Link Limited - Automotive Parts Catalog
+# OBIJONS TRADE LINK LIMITED - Automotive Parts Catalog
 
 A modern, responsive automotive parts catalog website built with Next.js, React, and TypeScript.
 

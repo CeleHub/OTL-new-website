@@ -4,8 +4,8 @@ import ContactForm from '@/components/forms/ContactForm'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
 
 export const metadata = {
-  title: 'Contact Us - Obijons Trade Link Limited',
-  description: 'Get in touch with Obijons Trade Link Limited for expert assistance with automotive parts and accessories.',
+  title: 'Contact Us - OBIJONS TRADE LINK LIMITED',
+  description: 'Get in touch with OBIJONS TRADE LINK LIMITED for expert assistance with automotive parts and accessories.',
 }
 
 export default function ContactPage() {
