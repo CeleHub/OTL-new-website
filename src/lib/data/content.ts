@@ -1,17 +1,17 @@
 export const companyInfo = {
   name: 'OTL Motor Parts',
   tagline: 'Quality Automotive Parts & Accessories',
-  phone: '1-800-555-0123',
-  email: 'info@otlmotorparts.com',
+  phone: '+234-803-377-0318',
+  email: 'okonzcelestine1@gmail.com',
   address: {
-    street: '1234 Auto Parts Boulevard',
-    city: 'Detroit',
-    state: 'MI',
-    zip: '48201',
+    street: 'Zone B, Block 11, Shop 39, (B11/39), Allied Spare Parts and Machinery Dealers Association (ASPMDA), Trade Fair',
+    city: 'Lagos',
+    state: 'Lagos',
+    zip: 'Nigeria',
   },
   hours: {
-    weekdays: 'Monday - Friday: 8:00 AM - 6:00 PM',
-    saturday: 'Saturday: 9:00 AM - 5:00 PM',
+    weekdays: 'Monday - Friday: 9:00 AM - 6:00 PM',
+    saturday: 'Saturday: Closed',
     sunday: 'Sunday: Closed',
   },
   social: {
