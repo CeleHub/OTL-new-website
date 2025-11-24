@@ -76,7 +76,7 @@ export default function ContactPage() {
                   >
                     <div className="text-primary-300 mb-2">{channel.icon}</div>
                     <p className="text-xs uppercase tracking-wide text-neutral-500">{channel.label}</p>
-                    <p className="text-white font-semibold">{channel.value}</p>
+                  <p className="text-white font-semibold break-words">{channel.value}</p>
                   </Link>
                 ))}
               </div>
@@ -146,9 +146,12 @@ export default function ContactPage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-primary-300">✉️</span>
-                  <a href={`mailto:${companyInfo.email}`} className="hover:text-white transition-colors">
-                    {companyInfo.email}
-                  </a>
+                <a href={`mailto:${companyInfo.email}`} className="hover:text-white transition-colors break-words">
+                  {companyInfo.email}
+                </a>
+                <a href={`mailto:${companyInfo.email}`} className="hover:text-white transition-colors break-words">
+                  {companyInfo.email}
+                </a>
                 </div>
               </div>
             </div>
