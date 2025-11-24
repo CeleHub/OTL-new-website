@@ -101,8 +101,9 @@ export default function ContactPage() {
               </div>
               <div className="flex gap-3">
                 <Link
-                  href={`https://maps.google.com/?q=${encodeURIComponent(companyInfo.address.street)}`}
+                  href="https://maps.app.goo.gl/bwu5QuZzDoHLh7hF7"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="flex-1"
                 >
                   <Button
