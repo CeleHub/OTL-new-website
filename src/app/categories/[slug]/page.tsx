@@ -37,8 +37,11 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
   }, [params.slug, sortBy])
 
   return (
-    <div className="bg-neutral-50 min-h-screen">
-      <div className="container py-8">
+    <div className="relative overflow-hidden">
+      <div className="absolute inset-0 -z-10 animated-bg opacity-50" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-neutral-950 via-neutral-950/95 to-neutral-950" />
+
+      <div className="container py-10 space-y-10 relative z-10">
         <Breadcrumbs
           items={[
             { label: 'Categories', href: '/categories' },
@@ -46,22 +49,29 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
           ]}
         />
 
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">{category.name}</h1>
-          <p className="text-neutral-600">{category.description}</p>
-          <p className="text-neutral-600 mt-2">
-            Showing {categoryProducts.length} products
-          </p>
-        </div>
+        <header className="space-y-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-500/10 border border-primary-500/30 text-primary-200 text-sm font-semibold">
+            🧩 {category.name} cluster
+            <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse" />
+          </div>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h1 className="text-4xl font-bold text-white">{category.name}</h1>
+              <p className="text-neutral-400">{category.description}</p>
+              <p className="text-neutral-500 text-sm mt-2">
+                {categoryProducts.length} product{categoryProducts.length === 1 ? '' : 's'}
+              </p>
+            </div>
+          </div>
+        </header>
 
-        {/* Controls */}
-        <div className="bg-white rounded-lg shadow-md p-4 mb-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center space-x-4">
-            <label className="text-sm font-medium text-neutral-700">Sort by:</label>
+        <div className="glass-dark rounded-3xl border border-white/10 p-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-3">
+            <label className="text-sm uppercase tracking-wide text-neutral-400">Sort by</label>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="input py-2 text-sm"
+              className="input bg-neutral-900/40 border border-white/10 text-neutral-100 text-sm"
             >
               <option value="relevance">Relevance</option>
               <option value="price-asc">Price: Low to High</option>
@@ -69,38 +79,32 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
               <option value="newest">Newest</option>
             </select>
           </div>
-
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setViewMode('grid')}
-              className={`p-2 rounded ${
-                viewMode === 'grid'
-                  ? 'bg-primary-100 text-primary-600'
-                  : 'text-neutral-400 hover:bg-neutral-100'
-              }`}
-              aria-label="Grid view"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M10 3H3v7h7V3zm11 0h-7v7h7V3zM10 14H3v7h7v-7zm11 0h-7v7h7v-7z" />
-              </svg>
-            </button>
-            <button
-              onClick={() => setViewMode('list')}
-              className={`p-2 rounded ${
-                viewMode === 'list'
-                  ? 'bg-primary-100 text-primary-600'
-                  : 'text-neutral-400 hover:bg-neutral-100'
-              }`}
-              aria-label="List view"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
-              </svg>
-            </button>
+          <div className="flex items-center gap-2">
+            {(['grid', 'list'] as ViewMode[]).map((mode) => (
+              <button
+                key={mode}
+                onClick={() => setViewMode(mode)}
+                className={`p-2 rounded-xl border transition-all ${
+                  viewMode === mode
+                    ? 'border-primary-500/60 bg-primary-500/10 text-primary-200'
+                    : 'border-white/10 text-neutral-500 hover:text-white'
+                }`}
+                aria-label={`${mode} view`}
+              >
+                {mode === 'grid' ? (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10 3H3v7h7V3zm11 0h-7v7h7V3zM10 14H3v7h7v-7zm11 0h-7v7h7v-7z" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
+                  </svg>
+                )}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Products */}
         {categoryProducts.length > 0 ? (
           <div
             className={
@@ -114,8 +118,8 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-md p-12 text-center">
-            <p className="text-xl text-neutral-600">
+          <div className="glass-dark rounded-3xl border border-white/10 p-12 text-center">
+            <p className="text-xl text-neutral-300">
               No products found in this category.
             </p>
           </div>

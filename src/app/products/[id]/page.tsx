@@ -20,8 +20,11 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
   }
 
   return (
-    <div className="bg-neutral-50 min-h-screen">
-      <div className="container py-8">
+    <div className="relative overflow-hidden">
+      <div className="absolute inset-0 -z-10 animated-bg opacity-50" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-neutral-950 via-neutral-950/95 to-neutral-950" />
+
+      <div className="container py-10 space-y-10 relative z-10">
         <Breadcrumbs
           items={[
             { label: 'Products', href: '/products' },
@@ -29,127 +32,133 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
           ]}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Product Image */}
-          <div className="bg-white rounded-lg shadow-md p-8">
-            <div className="aspect-square bg-neutral-100 rounded-lg flex items-center justify-center">
-              <div className="text-9xl">🔧</div>
+        <section className="grid grid-cols-1 xl:grid-cols-[1.05fr_0.95fr] gap-10">
+          <div className="glass-dark rounded-3xl border border-white/10 p-6">
+            <div className="aspect-square bg-gradient-to-br from-primary-900/40 via-neutral-900/60 to-neutral-900 rounded-3xl flex items-center justify-center relative overflow-hidden">
+              <div className="absolute inset-0 shimmer opacity-0 hover:opacity-100 transition-opacity duration-500" />
+              <div className="text-[5rem] md:text-[8rem]">🔧</div>
             </div>
           </div>
 
-          {/* Product Info */}
-          <div>
-            <div className="bg-white rounded-lg shadow-md p-8">
-              {product.featured && (
-                <span className="inline-block px-3 py-1 bg-accent-500 text-white text-sm font-semibold rounded mb-4">
-                  FEATURED
-                </span>
-              )}
-              <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-              
-              <div className="flex items-baseline gap-4 mb-6">
-                <p className="text-4xl font-bold text-primary-600">
-                  {formatCurrency(product.price)}
-                </p>
-                <p className={`text-lg font-medium ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
-                  {product.inStock ? '✓ In Stock' : '✗ Out of Stock'}
+          <div className="space-y-6">
+            <div className="glass-dark rounded-3xl border border-white/10 p-8 space-y-6">
+              <div className="flex flex-wrap items-center gap-3">
+                {product.featured && (
+                  <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-accent-500 to-pink-500 text-white shadow-neon">
+                    ⭐ Featured
+                  </span>
+                )}
+                <span className="text-xs uppercase tracking-[0.3em] text-neutral-500">Part #{product.partNumber}</span>
+              </div>
+              <h1 className="text-4xl font-bold text-white">{product.name}</h1>
+              <p className="text-neutral-300">{product.description}</p>
+              <div className="flex flex-wrap items-end gap-4">
+                <p className="text-4xl font-bold gradient-text">{formatCurrency(product.price)}</p>
+                <p className={`text-sm font-semibold flex items-center gap-2 ${product.inStock ? 'text-green-400' : 'text-red-400'}`}>
+                  <span className={`w-2 h-2 rounded-full ${product.inStock ? 'bg-green-400' : 'bg-red-400'} animate-pulse`} />
+                  {product.inStock ? 'In stock' : 'Out of stock'}
                 </p>
               </div>
 
-              <div className="border-t border-b py-4 mb-6 space-y-2">
-                <p className="text-sm">
-                  <span className="font-medium">Part Number:</span> {product.partNumber}
-                </p>
-                {product.oemNumber && (
-                  <p className="text-sm">
-                    <span className="font-medium">OEM Number:</span> {product.oemNumber}
-                  </p>
-                )}
-                <p className="text-sm">
-                  <span className="font-medium">Brand:</span> {product.brand}
-                </p>
-                <p className="text-sm">
-                  <span className="font-medium">Category:</span>{' '}
-                  <Link href={`/categories/${product.category}`} className="link">
+              <div className="grid sm:grid-cols-2 gap-4 text-sm text-neutral-300">
+                <div className="glass border border-white/5 rounded-2xl p-4">
+                  <p className="text-xs uppercase tracking-wide text-neutral-500">Brand</p>
+                  <p className="text-white font-semibold">{product.brand}</p>
+                </div>
+                <div className="glass border border-white/5 rounded-2xl p-4">
+                  <p className="text-xs uppercase tracking-wide text-neutral-500">Category</p>
+                  <Link href={`/categories/${product.category}`} className="text-primary-300 font-semibold hover:text-primary-200">
                     {product.category}
                   </Link>
-                </p>
-              </div>
-
-              <div className="mb-8">
-                <h2 className="font-semibold text-lg mb-2">Description</h2>
-                <p className="text-neutral-700">{product.description}</p>
+                </div>
+                {product.oemNumber && (
+                  <div className="glass border border-white/5 rounded-2xl p-4 sm:col-span-2">
+                    <p className="text-xs uppercase tracking-wide text-neutral-500">OEM Number</p>
+                    <p className="text-white font-semibold">{product.oemNumber}</p>
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="#rfq" className="flex-1">
-                  <Button size="lg" className="w-full">Request Quote</Button>
+                  <Button size="lg" glow className="w-full">
+                    Request Quote
+                  </Button>
                 </Link>
                 <Link href="/contact" className="flex-1">
-                  <Button size="lg" variant="outline" className="w-full">Contact Us</Button>
+                  <Button size="lg" variant="outline" className="w-full">
+                    Contact Sales
+                  </Button>
                 </Link>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Specifications */}
-        <div className="bg-white rounded-lg shadow-md p-8 mb-12">
-          <h2 className="text-2xl font-bold mb-6">Specifications</h2>
+        <section className="glass-dark rounded-3xl border border-white/10 p-8 space-y-6">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <h2 className="text-2xl font-bold text-white">Specifications</h2>
+              <p className="text-neutral-400 text-sm">Engineering data to validate fitment.</p>
+            </div>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {Object.entries(product.specifications).map(([key, value]) => (
-              <div key={key} className="flex border-b pb-3">
-                <span className="font-medium w-1/2">{key}:</span>
-                <span className="text-neutral-700 w-1/2">{value}</span>
+              <div key={key} className="rounded-2xl border border-white/10 p-4 bg-white/5">
+                <p className="text-xs uppercase tracking-wide text-neutral-500">{key}</p>
+                <p className="text-white font-semibold">{value}</p>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Vehicle Compatibility */}
-        <div className="bg-white rounded-lg shadow-md p-8 mb-12">
-          <h2 className="text-2xl font-bold mb-6">Vehicle Compatibility</h2>
+        <section className="glass-dark rounded-3xl border border-white/10 p-8 space-y-6">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <h2 className="text-2xl font-bold text-white">Vehicle Compatibility</h2>
+              <p className="text-neutral-400 text-sm">Validated chassis and trims for this component.</p>
+            </div>
+            <p className="text-sm text-neutral-500">
+              {product.compatibility.length} fitment {product.compatibility.length === 1 ? 'record' : 'records'}
+            </p>
+          </div>
           {product.compatibility.length > 0 ? (
             <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-neutral-100">
+              <table className="w-full text-left text-sm text-neutral-300">
+                <thead className="text-xs uppercase tracking-wide text-neutral-500">
                   <tr>
-                    <th className="px-4 py-3 text-left font-medium">Make</th>
-                    <th className="px-4 py-3 text-left font-medium">Model</th>
-                    <th className="px-4 py-3 text-left font-medium">Years</th>
-                    {product.compatibility.some(c => c.engineType) && (
-                      <th className="px-4 py-3 text-left font-medium">Engine</th>
-                    )}
+                    <th className="py-3 pr-4 font-normal">Make</th>
+                    <th className="py-3 pr-4 font-normal">Model</th>
+                    <th className="py-3 pr-4 font-normal">Years</th>
+                    {product.compatibility.some((c) => c.engineType) && <th className="py-3 pr-4 font-normal">Engine</th>}
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-white/5">
                   {product.compatibility.map((compat, index) => (
-                    <tr key={index} className="border-b">
-                      <td className="px-4 py-3">{compat.make}</td>
-                      <td className="px-4 py-3">{compat.model}</td>
-                      <td className="px-4 py-3">
+                    <tr key={index} className="hover:bg-white/5 transition-colors">
+                      <td className="py-3 pr-4 text-white">{compat.make}</td>
+                      <td className="py-3 pr-4">{compat.model}</td>
+                      <td className="py-3 pr-4">
                         {compat.yearStart} - {compat.yearEnd}
                       </td>
-                      {compat.engineType && (
-                        <td className="px-4 py-3">{compat.engineType}</td>
-                      )}
+                      {compat.engineType && <td className="py-3 pr-4">{compat.engineType}</td>}
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           ) : (
-            <p className="text-neutral-600">
-              Please contact us for compatibility information.
-            </p>
+            <p className="text-neutral-400">Please contact us for compatibility information.</p>
           )}
-        </div>
+        </section>
 
-        {/* RFQ Form */}
-        <div id="rfq" className="bg-white rounded-lg shadow-md p-8">
-          <h2 className="text-2xl font-bold mb-6">Request a Quote</h2>
+        <section id="rfq" className="glass-dark rounded-3xl border border-white/10 p-8 space-y-6">
+          <div>
+            <h2 className="text-2xl font-bold text-white">Request a Quote</h2>
+            <p className="text-neutral-400 text-sm">Share your quantity and destination for a tailored offer.</p>
+          </div>
           <RFQForm product={product} />
-        </div>
+        </section>
       </div>
     </div>
   )

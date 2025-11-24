@@ -8,87 +8,186 @@ export const metadata = {
   description: 'Learn about OBIJONS TRADE LINK LIMITED - your trusted source for quality automotive parts and accessories.',
 }
 
+const pillars = [
+  {
+    title: 'Quality First',
+    description: 'OEM-grade and premium aftermarket components that meet or exceed global standards.',
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Transparent Pricing',
+    description: 'Competitive quotes, fleet discounts, and bulk procurement without hidden fees.',
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Expert Support',
+    description: 'Seasoned technicians ready to spec-fit any vehicle with precision and speed.',
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>
+    ),
+  },
+]
+
+const milestones = [
+  { year: '2002', title: 'Launch', detail: 'Opened our first warehouse at ASPMDA Trade Fair Complex.' },
+  { year: '2010', title: 'Nationwide Reach', detail: 'Expanded logistics network to cover all Nigerian states.' },
+  { year: '2016', title: 'OEM Partnerships', detail: 'Signed strategic distribution deals with global manufacturers.' },
+  { year: '2024', title: 'Digital Upgrade', detail: 'Launched the next-gen catalog with real-time availability.' },
+]
+
+const stats = [
+  { label: 'Years of Service', value: '22+' },
+  { label: 'Parts in Catalog', value: '10K+' },
+  { label: 'Partner Garages', value: '500+' },
+  { label: 'Delivery Accuracy', value: '99%' },
+]
+
 export default function AboutPage() {
   return (
-    <div className="bg-neutral-50 min-h-screen">
-      <div className="container py-8">
+    <div className="relative overflow-hidden">
+      <div className="absolute inset-0 -z-10 animated-bg opacity-70" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-neutral-950/90 via-neutral-950/80 to-neutral-950" />
+
+      <div className="container py-10 space-y-16 relative z-10">
         <Breadcrumbs items={[{ label: 'About', href: '/about' }]} />
 
-        {/* Hero Section */}
-        <div className="bg-white rounded-lg shadow-md p-8 md:p-12 mb-8">
-          <h1 className="text-4xl font-bold mb-6">About OBIJONS TRADE LINK LIMITED</h1>
-          <p className="text-xl text-neutral-700 leading-relaxed mb-6">
-            For over two decades, OBIJONS TRADE LINK LIMITED has been the trusted source for quality
-            automotive parts and accessories. We're dedicated to providing auto repair shops,
-            mechanics, and car enthusiasts with the parts they need at competitive prices.
-          </p>
-        </div>
-
-        {/* Mission & Values */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+        {/* Hero */}
+        <section className="glass-dark border border-primary-500/20 rounded-3xl p-8 md:p-12 overflow-hidden">
+          <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-center">
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-500/10 border border-primary-500/30 text-primary-200 text-sm font-semibold">
+                🚗 Nigerian Automotive Backbone
+              </div>
+              <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
+                Powering West Africa&apos;s automotive supply chain since 2002
+              </h1>
+              <p className="text-neutral-300 text-lg leading-relaxed">
+                OBIJONS TRADE LINK LIMITED delivers precision-fit components, smart procurement, and lightning-fast fulfillment for
+                workshops, fleets, and enthusiasts. Our Lagos HQ orchestrates a nationwide network of technicians, warehouses, and logistics partners.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link href="/products">
+                  <Button size="lg" glow endIcon={
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  }>
+                    Explore Catalog
+                  </Button>
+                </Link>
+                <Link href="/contact">
+                  <Button size="lg" variant="outline" startIcon={
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  }>
+                    Talk to Sales
+                  </Button>
+                </Link>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Quality First</h3>
-            <p className="text-neutral-700">
-              We stock only high-quality OEM and aftermarket parts from trusted manufacturers,
-              backed by comprehensive warranties.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+            <div className="glass border border-white/10 rounded-3xl p-6 space-y-6 shadow-neon">
+              <h2 className="text-white text-xl font-semibold">Mission Snapshot</h2>
+              <p className="text-neutral-300 text-sm leading-relaxed">
+                Connect Nigeria&apos;s automotive ecosystem with guaranteed components, rigorous QA, and support teams that understand every chassis on the road.
+              </p>
+              <div className="grid grid-cols-2 gap-3">
+                {stats.map((stat) => (
+                  <div key={stat.label} className="glass-dark rounded-2xl p-4 text-center border border-white/10">
+                    <p className="text-2xl font-bold text-white">{stat.value}</p>
+                    <p className="text-xs uppercase tracking-wide text-neutral-500">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Fair Pricing</h3>
-            <p className="text-neutral-700">
-              Our competitive pricing and bulk discounts ensure you get the best value without
-              compromising on quality.
-            </p>
           </div>
+        </section>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Expert Support</h3>
-            <p className="text-neutral-700">
-              Our knowledgeable team is ready to help you find the right parts and answer
-              any technical questions.
-            </p>
+        {/* Pillars */}
+        <section className="space-y-6">
+          <h2 className="text-3xl md:text-4xl font-bold gradient-text text-center">Our Pillars</h2>
+          <div className="grid gap-6 md:grid-cols-3">
+            {pillars.map((pillar) => (
+              <div key={pillar.title} className="glass-dark rounded-3xl border border-primary-500/20 p-6 group hover:border-primary-400/60 transition-all duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-primary-500/20 flex items-center justify-center text-primary-300 mb-4 group-hover:scale-110 group-hover:text-primary-200 transition-all duration-300">
+                  {pillar.icon}
+                </div>
+                <h3 className="text-white text-xl font-semibold mb-3">{pillar.title}</h3>
+                <p className="text-neutral-400 leading-relaxed">{pillar.description}</p>
+              </div>
+            ))}
           </div>
-        </div>
+        </section>
+
+        {/* Timeline */}
+        <section className="glass-dark rounded-3xl border border-white/10 p-8 lg:p-12 space-y-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <h2 className="text-3xl font-bold text-white">Two decades of momentum</h2>
+              <p className="text-neutral-400">Milestones that shaped our supply chain innovations.</p>
+            </div>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 text-sm text-neutral-300 border border-white/10">
+              <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse" />
+              Continuous evolution
+            </span>
+          </div>
+          <div className="relative">
+            <div className="absolute left-4 top-0 bottom-0 border-l border-primary-500/30 hidden md:block" aria-hidden />
+            <div className="space-y-6">
+              {milestones.map((milestone, index) => (
+                <div key={milestone.year} className="relative md:pl-12">
+                  <div className="absolute left-1 md:left-2 top-3 w-2 h-2 rounded-full bg-primary-400 shadow-neon hidden md:block" />
+                  <div className="glass border border-white/10 rounded-2xl p-5 hover:border-primary-500/40 transition-all duration-300">
+                    <div className="flex items-center gap-3 text-sm text-primary-300 font-semibold tracking-wide uppercase">
+                      <span>{milestone.year}</span>
+                      <span className="w-6 h-px bg-primary-500/50 hidden sm:block" />
+                      <span className="text-white text-base normal-case">{milestone.title}</span>
+                    </div>
+                    <p className="text-neutral-400 mt-2">{milestone.detail}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* CTA */}
-        <div className="bg-primary-700 text-white rounded-lg shadow-md p-8 md:p-12 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="text-xl mb-8 text-primary-100">
-            Browse our extensive catalog or contact us for personalized assistance
+        <section className="glass-dark rounded-3xl border border-primary-500/30 p-8 md:p-12 text-center space-y-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">Ready to co-create the future of automotive logistics?</h2>
+          <p className="text-neutral-300 max-w-3xl mx-auto text-lg">
+            Whether you manage a single shop or a nationwide fleet, we deliver the accuracy, scale, and responsiveness modern operations demand.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/products">
-              <Button size="lg" className="bg-white text-primary-600 hover:bg-neutral-100">
+              <Button size="lg" glow endIcon={
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              }>
                 Browse Products
               </Button>
             </Link>
             <Link href="/contact">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white text-white hover:bg-white/10"
-              >
-                Contact Us
+              <Button size="lg" variant="ghost" startIcon={
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+              }>
+                Schedule a Consultation
               </Button>
             </Link>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   )

@@ -36,12 +36,15 @@ export default function FilterSidebar({ onFilterChange, initialFilters = {} }: F
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
+    <div className="glass-dark rounded-3xl border border-white/10 p-6 space-y-6 text-neutral-200">
       <div className="flex justify-between items-center">
-        <h3 className="font-semibold text-lg">Filters</h3>
+        <div>
+          <p className="text-xs uppercase tracking-wide text-neutral-500">Refine</p>
+          <h3 className="font-semibold text-xl text-white">Filters</h3>
+        </div>
         <button
           onClick={handleReset}
-          className="text-sm text-primary-600 hover:text-primary-700"
+          className="text-xs text-primary-300 hover:text-primary-100 transition-colors"
         >
           Reset All
         </button>
@@ -49,86 +52,86 @@ export default function FilterSidebar({ onFilterChange, initialFilters = {} }: F
 
       {/* Category Filter */}
       <div>
-        <h4 className="font-medium text-neutral-900 mb-3">Category</h4>
+        <h4 className="font-semibold text-sm uppercase tracking-wide text-neutral-400 mb-3">Category</h4>
         <div className="space-y-2">
           {categories.map((category) => (
-            <label key={category.slug} className="flex items-center space-x-2 cursor-pointer">
+            <label key={category.slug} className="flex items-center space-x-3 cursor-pointer group">
               <input
                 type="checkbox"
                 checked={filters.categories?.includes(category.slug) || false}
                 onChange={() => handleCheckboxChange('categories', category.slug)}
-                className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500"
+                className="w-4 h-4 text-primary-500 rounded border-neutral-600 bg-neutral-900/40 focus:ring-primary-500 focus:ring-offset-0"
               />
-              <span className="text-sm text-neutral-700">{category.name}</span>
+              <span className="text-sm text-neutral-300 group-hover:text-white">{category.name}</span>
             </label>
           ))}
         </div>
       </div>
 
       {/* Brand Filter */}
-      <div className="border-t pt-6">
-        <h4 className="font-medium text-neutral-900 mb-3">Brand</h4>
-        <div className="space-y-2 max-h-48 overflow-y-auto">
+      <div className="border-t border-white/5 pt-6">
+        <h4 className="font-semibold text-sm uppercase tracking-wide text-neutral-400 mb-3">Brand</h4>
+        <div className="space-y-2 max-h-48 overflow-y-auto pr-2 scrollbar-modern">
           {brands.map((brand) => (
-            <label key={brand} className="flex items-center space-x-2 cursor-pointer">
+            <label key={brand} className="flex items-center space-x-3 cursor-pointer group">
               <input
                 type="checkbox"
                 checked={filters.brands?.includes(brand) || false}
                 onChange={() => handleCheckboxChange('brands', brand)}
-                className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500"
+                className="w-4 h-4 text-primary-500 rounded border-neutral-600 bg-neutral-900/40 focus:ring-primary-500 focus:ring-offset-0"
               />
-              <span className="text-sm text-neutral-700">{brand}</span>
+              <span className="text-sm text-neutral-300 group-hover:text-white">{brand}</span>
             </label>
           ))}
         </div>
       </div>
 
       {/* Make Filter */}
-      <div className="border-t pt-6">
-        <h4 className="font-medium text-neutral-900 mb-3">Vehicle Make</h4>
-        <div className="space-y-2 max-h-48 overflow-y-auto">
+      <div className="border-t border-white/5 pt-6">
+        <h4 className="font-semibold text-sm uppercase tracking-wide text-neutral-400 mb-3">Vehicle Make</h4>
+        <div className="space-y-2 max-h-48 overflow-y-auto pr-2 scrollbar-modern">
           {makes.map((make) => (
-            <label key={make} className="flex items-center space-x-2 cursor-pointer">
+            <label key={make} className="flex items-center space-x-3 cursor-pointer group">
               <input
                 type="checkbox"
                 checked={filters.makes?.includes(make) || false}
                 onChange={() => handleCheckboxChange('makes', make)}
-                className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500"
+                className="w-4 h-4 text-primary-500 rounded border-neutral-600 bg-neutral-900/40 focus:ring-primary-500 focus:ring-offset-0"
               />
-              <span className="text-sm text-neutral-700">{make}</span>
+              <span className="text-sm text-neutral-300 group-hover:text-white">{make}</span>
             </label>
           ))}
         </div>
       </div>
 
       {/* Price Range */}
-      <div className="border-t pt-6">
-        <h4 className="font-medium text-neutral-900 mb-3">Price Range</h4>
+      <div className="border-t border-white/5 pt-6">
+        <h4 className="font-semibold text-sm uppercase tracking-wide text-neutral-400 mb-3">Price Range</h4>
         <div className="space-y-2">
           {[
-            { label: 'Under $50', min: 0, max: 50 },
-            { label: '$50 - $100', min: 50, max: 100 },
-            { label: '$100 - $250', min: 100, max: 250 },
-            { label: '$250 - $500', min: 250, max: 500 },
-            { label: 'Over $500', min: 500, max: 10000 },
+            { label: 'Under ₦15,000', min: 0, max: 15000 },
+            { label: '₦15,000 - ₦30,000', min: 15000, max: 30000 },
+            { label: '₦30,000 - ₦50,000', min: 30000, max: 50000 },
+            { label: '₦50,000 - ₦100,000', min: 50000, max: 100000 },
+            { label: 'Over ₦100,000', min: 100000, max: 1000000 },
           ].map((range) => (
-            <label key={range.label} className="flex items-center space-x-2 cursor-pointer">
+            <label key={range.label} className="flex items-center space-x-3 cursor-pointer group">
               <input
                 type="radio"
                 name="priceRange"
                 checked={filters.minPrice === range.min && filters.maxPrice === range.max}
                 onChange={() => handlePriceChange(range.min, range.max)}
-                className="w-4 h-4 text-primary-600 focus:ring-primary-500"
+                className="w-4 h-4 text-primary-500 border-neutral-600 bg-neutral-900/40 focus:ring-primary-500 focus:ring-offset-0"
               />
-              <span className="text-sm text-neutral-700">{range.label}</span>
+              <span className="text-sm text-neutral-300 group-hover:text-white">{range.label}</span>
             </label>
           ))}
         </div>
       </div>
 
       {/* Stock Status */}
-      <div className="border-t pt-6">
-        <label className="flex items-center space-x-2 cursor-pointer">
+      <div className="border-t border-white/5 pt-6">
+        <label className="flex items-center space-x-3 cursor-pointer">
           <input
             type="checkbox"
             checked={filters.inStock || false}
@@ -137,10 +140,16 @@ export default function FilterSidebar({ onFilterChange, initialFilters = {} }: F
               setFilters(newFilters)
               onFilterChange(newFilters)
             }}
-            className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500"
+            className="w-4 h-4 text-primary-500 rounded border-neutral-600 bg-neutral-900/40 focus:ring-primary-500 focus:ring-offset-0"
           />
-          <span className="text-sm font-medium text-neutral-900">In Stock Only</span>
+          <span className="text-sm font-medium text-white">In Stock Only</span>
         </label>
+      </div>
+
+      <div className="pt-6 border-t border-white/5">
+        <Button variant="ghost" className="w-full" onClick={handleReset}>
+          Clear filters
+        </Button>
       </div>
     </div>
   )
