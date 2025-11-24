@@ -2,6 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
+import { Suspense } from 'react'
 import { useState, useMemo, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
@@ -14,7 +15,7 @@ import { debounce } from '@/lib/utils'
 
 const quickQueries = ['Bushing', 'Engine mount', 'Brake rotor', 'Seat cushion']
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams()
   const [query, setQuery] = useState(searchParams.get('q') || '')
   const [debouncedQuery, setDebouncedQuery] = useState(query)
@@ -143,5 +144,27 @@ export default function SearchPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="relative overflow-hidden">
+          <div className="absolute inset-0 -z-10 animated-bg opacity-50" />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-neutral-950 via-neutral-950/95 to-neutral-950" />
+          <div className="container py-10 relative z-10">
+            <div className="glass-dark rounded-3xl border border-white/10 p-12 text-center space-y-4">
+              <div className="animate-pulse text-neutral-400 text-sm uppercase tracking-[0.3em]">
+                Initializing search…
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    >
+      <SearchContent />
+    </Suspense>
   )
 }
