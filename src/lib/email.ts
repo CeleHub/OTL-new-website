@@ -5,7 +5,7 @@ const createTransporter = () => {
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
     port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: false, // true for 465, false for other ports
+    secure: false,
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
@@ -26,21 +26,19 @@ export const emailTemplates = {
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #2A3B8F;">New Contact Form Submission</h2>
-        <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px;">
           <p><strong>Name:</strong> ${data.name}</p>
           <p><strong>Email:</strong> ${data.email}</p>
           <p><strong>Phone:</strong> ${data.phone}</p>
           <p><strong>Subject:</strong> ${data.subject}</p>
         </div>
-        <div style="background-color: #ffffff; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
+        <div style="background-color: #ffffff; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; margin-top:20px;">
           <h3 style="color: #374151; margin-top: 0;">Message:</h3>
           <p style="line-height: 1.6; color: #4b5563;">${data.message.replace(/\n/g, '<br>')}</p>
         </div>
-        <div style="margin-top: 20px; padding: 15px; background-color: #f0f9ff; border-radius: 8px;">
-          <p style="margin: 0; color: #2A3B8F; font-size: 14px;">
-            <strong>Reply to:</strong> ${data.email}
-          </p>
-        </div>
+        <p style="margin-top: 20px; color: #2A3B8F; font-size: 14px;">
+          <strong>Reply to:</strong> ${data.email}
+        </p>
       </div>
     `,
   }),
@@ -59,36 +57,42 @@ export const emailTemplates = {
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #2A3B8F;">New Quote Request</h2>
-        <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #374151; margin-top: 0;">Product Details:</h3>
+
+        <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px;">
+          <h3 style="color: #374151;">Product Details:</h3>
           <p><strong>Product:</strong> ${data.productName}</p>
           <p><strong>Product ID:</strong> ${data.productId}</p>
           <p><strong>Quantity:</strong> ${data.quantity}</p>
         </div>
-        <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #374151; margin-top: 0;">Customer Information:</h3>
+
+        <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin-top:20px;">
+          <h3 style="color: #374151;">Customer Information:</h3>
           <p><strong>Name:</strong> ${data.name}</p>
           <p><strong>Email:</strong> ${data.email}</p>
           <p><strong>Phone:</strong> ${data.phone}</p>
           ${data.company ? `<p><strong>Company:</strong> ${data.company}</p>` : ''}
         </div>
-        ${data.message ? `
-          <div style="background-color: #ffffff; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
-            <h3 style="color: #374151; margin-top: 0;">Additional Information:</h3>
-            <p style="line-height: 1.6; color: #4b5563;">${data.message.replace(/\n/g, '<br>')}</p>
+
+        ${
+          data.message
+            ? `
+          <div style="background-color: #ffffff; padding: 20px; margin-top:20px; border: 1px solid #e5e7eb; border-radius: 8px;">
+            <h3 style="color: #374151;">Additional Information:</h3>
+            <p style="line-height: 1.6;">${data.message.replace(/\n/g, '<br>')}</p>
           </div>
-        ` : ''}
-        <div style="margin-top: 20px; padding: 15px; background-color: #f0f9ff; border-radius: 8px;">
-          <p style="margin: 0; color: #2A3B8F; font-size: 14px;">
-            <strong>Reply to:</strong> ${data.email}
-          </p>
-        </div>
+        `
+            : ''
+        }
+
+        <p style="margin-top: 20px; color: #2A3B8F; font-size: 14px;">
+          <strong>Reply to:</strong> ${data.email}
+        </p>
       </div>
     `,
   }),
 }
 
-// Send email function
+// Main email sender function
 export const sendEmail = async (
   to: string,
   subject: string,
@@ -96,12 +100,13 @@ export const sendEmail = async (
 ): Promise<boolean> => {
   try {
     const transporter = createTransporter()
-    
+
     const mailOptions = {
       from: process.env.SMTP_FROM || process.env.SMTP_USER,
       to,
       subject,
       html,
+      replyTo: to,
     }
 
     await transporter.sendMail(mailOptions)
@@ -122,12 +127,12 @@ export const sendContactFormEmail = async (data: {
   message: string
 }): Promise<boolean> => {
   const template = emailTemplates.contactForm(data)
-  const contactEmail = process.env.CONTACT_EMAIL || 'okonzcelestine1@gmail.com'
-  
-  return await sendEmail(contactEmail, template.subject, template.html)
+  const destination = process.env.CONTACT_EMAIL || 'okonzcelestine1@gmail.com'
+
+  return sendEmail(destination, template.subject, template.html)
 }
 
-// Send RFQ form email
+// Send RFQ email
 export const sendRFQFormEmail = async (data: {
   name: string
   email: string
@@ -139,7 +144,7 @@ export const sendRFQFormEmail = async (data: {
   message?: string
 }): Promise<boolean> => {
   const template = emailTemplates.rfqForm(data)
-  const contactEmail = process.env.CONTACT_EMAIL || 'okonzcelestine1@gmail.com'
-  
-  return await sendEmail(contactEmail, template.subject, template.html)
+  const destination = process.env.CONTACT_EMAIL || 'okonzcelestine1@gmail.com'
+
+  return sendEmail(destination, template.subject, template.html)
 }
