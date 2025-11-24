@@ -149,9 +149,6 @@ export default function ContactPage() {
                 <a href={`mailto:${companyInfo.email}`} className="hover:text-white transition-colors break-words">
                   {companyInfo.email}
                 </a>
-                <a href={`mailto:${companyInfo.email}`} className="hover:text-white transition-colors break-words">
-                  {companyInfo.email}
-                </a>
                 </div>
               </div>
             </div>
