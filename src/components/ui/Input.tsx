@@ -32,9 +32,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             className={cn(
               'input',
-              startIcon && 'pl-10',
-              endIcon && 'pr-10',
-              error && 'border-red-500 focus:ring-red-500',
+              startIcon ? "pl-10" : undefined,
+              endIcon ? "pr-10" : undefined,
+              error ? "border-red-500 focus:ring-red-500" : undefined,
               className
             )}
             {...props}
