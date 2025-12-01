@@ -3,7 +3,7 @@ export const companyInfo = {
   tagline: 'Quality Automotive Parts & Accessories',
   phone: '+234-803-377-0318',
   whatsapp: '+234-803-377-0318',
-  email: 'okonzcelestine1@gmail.com',
+  email: 'celestine4321@gmail.com',
   address: {
     street: 'Zone B, Block 11, Shop 39, (B11/39), Allied Spare Parts and Machinery Dealers Association (ASPMDA), Trade Fair',
     city: 'Lagos',

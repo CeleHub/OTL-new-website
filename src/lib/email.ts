@@ -127,7 +127,7 @@ export const sendContactFormEmail = async (data: {
   message: string
 }): Promise<boolean> => {
   const template = emailTemplates.contactForm(data)
-  const contactEmail = process.env.CONTACT_EMAIL || 'okonzcelestine1@gmail.com'
+  const contactEmail = process.env.CONTACT_EMAIL || 'celestine4321@gmail.com'
   
   return await sendEmail({
     to: contactEmail,
@@ -149,7 +149,7 @@ export const sendRFQFormEmail = async (data: {
   message?: string
 }): Promise<boolean> => {
   const template = emailTemplates.rfqForm(data)
-  const contactEmail = process.env.CONTACT_EMAIL || 'okonzcelestine1@gmail.com'
+  const contactEmail = process.env.CONTACT_EMAIL || 'celestine4321@gmail.com'
   
   return await sendEmail({
     to: contactEmail,
