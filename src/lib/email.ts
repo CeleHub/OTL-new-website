@@ -1,17 +1,14 @@
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
 
-// Create transporter for sending emails
-const createTransporter = () => {
-  return nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  })
-}
+const resendClient = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null
+
+const getFromAddress = () =>
+  process.env.RESEND_FROM ||
+  process.env.SMTP_FROM ||
+  process.env.SMTP_USER ||
+  'OBIJONS TRADE LINK LIMITED <onboarding@resend.dev>'
 
 // Email templates
 export const emailTemplates = {
@@ -88,27 +85,37 @@ export const emailTemplates = {
   }),
 }
 
-// Send email function
-export const sendEmail = async (
-  to: string,
-  subject: string,
+type SendEmailOptions = {
+  to: string
+  subject: string
   html: string
-): Promise<boolean> => {
+  replyTo?: string
+}
+
+// Send email function via Resend
+export const sendEmail = async ({
+  to,
+  subject,
+  html,
+  replyTo,
+}: SendEmailOptions): Promise<boolean> => {
+  if (!resendClient) {
+    console.error('RESEND_API_KEY is not configured. Unable to send email.')
+    return false
+  }
+
   try {
-    const transporter = createTransporter()
-    
-    const mailOptions = {
-      from: process.env.SMTP_FROM || process.env.SMTP_USER,
+    await resendClient.emails.send({
+      from: getFromAddress(),
       to,
       subject,
       html,
-    }
-
-    await transporter.sendMail(mailOptions)
+      replyTo: replyTo,
+    })
     console.log('Email sent successfully to:', to)
     return true
   } catch (error) {
-    console.error('Error sending email:', error)
+    console.error('Error sending email via Resend:', error)
     return false
   }
 }
@@ -124,7 +131,12 @@ export const sendContactFormEmail = async (data: {
   const template = emailTemplates.contactForm(data)
   const contactEmail = process.env.CONTACT_EMAIL || 'okonzcelestine1@gmail.com'
   
-  return await sendEmail(contactEmail, template.subject, template.html)
+  return await sendEmail({
+    to: contactEmail,
+    subject: template.subject,
+    html: template.html,
+    replyTo: data.email,
+  })
 }
 
 // Send RFQ form email
@@ -141,5 +153,10 @@ export const sendRFQFormEmail = async (data: {
   const template = emailTemplates.rfqForm(data)
   const contactEmail = process.env.CONTACT_EMAIL || 'okonzcelestine1@gmail.com'
   
-  return await sendEmail(contactEmail, template.subject, template.html)
+  return await sendEmail({
+    to: contactEmail,
+    subject: template.subject,
+    html: template.html,
+    replyTo: data.email,
+  })
 }

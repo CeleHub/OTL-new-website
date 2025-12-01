@@ -55,40 +55,23 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Environment Variables
 
-Create a `.env.local` file in the root directory:
+Create a `.env.local` file in the root directory and configure your Resend credentials:
 
 ```bash
-# Email Configuration
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=okonzcelestine1@gmail.com
-SMTP_PASS=your_app_password_here
-CONTACT_EMAIL=okonzcelestine1@gmail.com
-SMTP_FROM=okonzcelestine1@gmail.com
+# Contact email notifications
+RESEND_API_KEY=your_resend_api_key
+RESEND_FROM="OBIJONS TRADE LINK LIMITED <notifications@yourdomain.com>"
+CONTACT_EMAIL=you@yourdomain.com
 ```
 
-### Email Setup Instructions
+### Email Setup (Resend)
 
-**For Gmail (Recommended):**
-
-1. **Enable 2-Factor Authentication** on your Google account
-2. **Generate an App Password:**
-   - Go to Google Account settings
-   - Security → 2-Step Verification → App passwords
-   - Generate a password for "Mail"
-   - Copy the 16-character password
-3. **Update `.env.local`:**
-   - Replace `your_app_password_here` with the generated app password
-   - Keep `SMTP_USER` as `okonzcelestine1@gmail.com`
-
-**For Other Email Providers:**
-- Update `SMTP_HOST` and `SMTP_PORT` accordingly
-- Use your email provider's SMTP credentials
-
-**Testing Email:**
-- Start the development server: `npm run dev`
-- Submit a contact form or RFQ form
-- Check your email inbox for notifications
+1. [Create a Resend account](https://resend.com) and add/verify a sending domain.
+2. Generate an API key and assign it to `RESEND_API_KEY`.
+3. Set `RESEND_FROM` to the verified sender (e.g. `"OBIJONS TRADE LINK LIMITED <hello@yourdomain.com>"`).
+4. Set `CONTACT_EMAIL` to the inbox that should receive contact/RFQ submissions.
+5. Deploy your environment variables on Vercel (Project → Settings → Environment Variables) so the `/api/contact` and `/api/inquiry` routes can send emails in production.
+6. Start the dev server (`npm run dev`) and submit the contact/RFQ forms to verify that emails arrive via Resend.
 
 ## Deployment
 
