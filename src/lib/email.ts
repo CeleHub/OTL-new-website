@@ -6,8 +6,6 @@ const resendClient = process.env.RESEND_API_KEY
 
 const getFromAddress = () =>
   process.env.RESEND_FROM ||
-  process.env.SMTP_FROM ||
-  process.env.SMTP_USER ||
   'OBIJONS TRADE LINK LIMITED <onboarding@resend.dev>'
 
 // Email templates
