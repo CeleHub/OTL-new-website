@@ -20,12 +20,19 @@ export async function getProducts(filters?: {
     // Get category ID if category slug provided
     let categoryId = null
     if (filters?.category) {
-      const { data: category } = await supabase
+      const { data: category, error: categoryError } = await supabase
         .from('categories')
         .select('id')
         .eq('slug', filters.category)
         .single()
-      categoryId = category?.id
+      
+      if (categoryError) {
+        // Category not found or query failed - log and continue without category filter
+        console.warn(`Category lookup failed for slug "${filters.category}":`, categoryError.message)
+        categoryId = null
+      } else {
+        categoryId = category?.id || null
+      }
     }
 
     // Build query

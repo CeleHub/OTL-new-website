@@ -16,12 +16,19 @@ export async function GET(request: Request) {
     // Convert category slug to category ID if provided
     let categoryId = null
     if (category) {
-      const { data: categoryData } = await supabase
+      const { data: categoryData, error: categoryError } = await supabase
         .from('categories')
         .select('id')
         .eq('slug', category)
         .single()
-      categoryId = categoryData?.id || null
+      
+      if (categoryError) {
+        // Category not found or query failed - log and continue without category filter
+        console.warn(`Category lookup failed for slug "${category}":`, categoryError.message)
+        categoryId = null
+      } else {
+        categoryId = categoryData?.id || null
+      }
     }
 
     // Build query
