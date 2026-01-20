@@ -1,8 +1,9 @@
-import { categories } from '@/lib/data/products'
+import { getCategories } from '@/lib/data/database'
 import CategoryCard from '@/components/products/CategoryCard'
 import Breadcrumbs from '@/components/ui/Breadcrumbs'
 
-export default function CategoriesPage() {
+export default async function CategoriesPage() {
+  const categories = await getCategories()
   return (
     <div className="relative overflow-hidden">
       <div className="absolute inset-0 -z-10 animated-bg opacity-50" />

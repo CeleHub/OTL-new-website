@@ -1,19 +1,13 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { products } from '@/lib/data/products'
+import { getProduct } from '@/lib/data/database'
 import { formatCurrency } from '@/lib/utils'
 import Breadcrumbs from '@/components/ui/Breadcrumbs'
 import Button from '@/components/ui/Button'
 import RFQForm from '@/components/forms/RFQForm'
 
-export async function generateStaticParams() {
-  return products.map((product) => ({
-    id: product.id,
-  }))
-}
-
-export default function ProductDetailPage({ params }: { params: { id: string } }) {
-  const product = products.find((p) => p.id === params.id)
+export default async function ProductDetailPage({ params }: { params: { id: string } }) {
+  const product = await getProduct(params.id)
 
   if (!product) {
     notFound()

@@ -1,16 +1,32 @@
 'use client'
 
-import { useState, useMemo } from 'react'
-import { products } from '@/lib/data/products'
+import { useState, useMemo, useEffect } from 'react'
+import { getProducts } from '@/lib/data/database-client'
 import ProductCard from '@/components/products/ProductCard'
 import FilterSidebar from '@/components/products/FilterSidebar'
 import Breadcrumbs from '@/components/ui/Breadcrumbs'
-import { ViewMode } from '@/types'
+import { ViewMode, Product } from '@/types'
 
 export default function ProductsPage() {
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState<any>({})
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
   const [sortBy, setSortBy] = useState('relevance')
+
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const data = await getProducts()
+        setProducts(data)
+      } catch (error) {
+        console.error('Error loading products:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadProducts()
+  }, [])
 
   const filteredProducts = useMemo(() => {
     let filtered = [...products]
@@ -67,7 +83,9 @@ export default function ProductsPage() {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <h1 className="text-4xl md:text-5xl font-bold text-white">All Products</h1>
-              <p className="text-neutral-400">Showing {filteredProducts.length} of {products.length} references</p>
+              <p className="text-neutral-400">
+                {loading ? 'Loading...' : `Showing ${filteredProducts.length} of ${products.length} references`}
+              </p>
             </div>
             <div className="grid grid-cols-3 gap-3 text-center">
               {[
@@ -131,7 +149,11 @@ export default function ProductsPage() {
               </div>
             </div>
 
-            {filteredProducts.length > 0 ? (
+            {loading ? (
+              <div className="glass-dark rounded-3xl border border-white/10 p-12 text-center">
+                <p className="text-neutral-400">Loading products...</p>
+              </div>
+            ) : filteredProducts.length > 0 ? (
               <div
                 className={
                   viewMode === 'grid'

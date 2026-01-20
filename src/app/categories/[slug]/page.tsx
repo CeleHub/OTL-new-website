@@ -1,24 +1,45 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { notFound } from 'next/navigation'
-import { products, categories } from '@/lib/data/products'
+import { getProducts, getCategories } from '@/lib/data/database-client'
 import ProductCard from '@/components/products/ProductCard'
 import Breadcrumbs from '@/components/ui/Breadcrumbs'
-import { ViewMode } from '@/types'
+import { ViewMode, Product, Category } from '@/types'
 
 export default function CategoryPage({ params }: { params: { slug: string } }) {
-  const category = categories.find((c) => c.slug === params.slug)
-  
-  if (!category) {
-    notFound()
-  }
-
+  const [category, setCategory] = useState<Category | null>(null)
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
   const [sortBy, setSortBy] = useState('relevance')
 
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const [allCategories, allProducts] = await Promise.all([
+          getCategories(),
+          getProducts({ category: params.slug }),
+        ])
+        
+        const foundCategory = allCategories.find((c) => c.slug === params.slug)
+        if (!foundCategory) {
+          notFound()
+        }
+        
+        setCategory(foundCategory)
+        setProducts(allProducts)
+      } catch (error) {
+        console.error('Error loading category:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadData()
+  }, [params.slug])
+
   const categoryProducts = useMemo(() => {
-    let filtered = products.filter((p) => p.category === params.slug)
+    let filtered = [...products]
 
     switch (sortBy) {
       case 'price-asc':
@@ -50,19 +71,23 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
         />
 
         <header className="space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-500/10 border border-primary-500/30 text-primary-200 text-sm font-semibold">
-            🧩 {category.name} cluster
-            <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse" />
-          </div>
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <h1 className="text-4xl font-bold text-white">{category.name}</h1>
-              <p className="text-neutral-400">{category.description}</p>
-              <p className="text-neutral-500 text-sm mt-2">
-                {categoryProducts.length} product{categoryProducts.length === 1 ? '' : 's'}
-              </p>
-            </div>
-          </div>
+          {category && (
+            <>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-500/10 border border-primary-500/30 text-primary-200 text-sm font-semibold">
+                🧩 {category.name} cluster
+                <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse" />
+              </div>
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <h1 className="text-4xl font-bold text-white">{category.name}</h1>
+                  <p className="text-neutral-400">{category.description}</p>
+                  <p className="text-neutral-500 text-sm mt-2">
+                    {loading ? 'Loading...' : `${categoryProducts.length} product${categoryProducts.length === 1 ? '' : 's'}`}
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
         </header>
 
         <div className="glass-dark rounded-3xl border border-white/10 p-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -105,7 +130,11 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
           </div>
         </div>
 
-        {categoryProducts.length > 0 ? (
+        {loading ? (
+          <div className="glass-dark rounded-3xl border border-white/10 p-12 text-center">
+            <p className="text-neutral-400">Loading products...</p>
+          </div>
+        ) : categoryProducts.length > 0 ? (
           <div
             className={
               viewMode === 'grid'

@@ -1,12 +1,17 @@
 import Link from 'next/link'
-import { products, categories } from '@/lib/data/products'
+import { getProducts, getCategories } from '@/lib/data/database'
 import ProductCard from '@/components/products/ProductCard'
 import CategoryCard from '@/components/products/CategoryCard'
 import Button from '@/components/ui/Button'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
 
-export default function Home() {
-  const featuredProducts = products.filter(p => p.featured).slice(0, 6)
+export default async function Home() {
+  const [allProducts, allCategories] = await Promise.all([
+    getProducts({ featured: true }),
+    getCategories(),
+  ])
+  
+  const featuredProducts = allProducts.slice(0, 6)
 
   return (
     <div className="relative overflow-hidden">
@@ -134,7 +139,7 @@ export default function Home() {
             <p className="text-xl text-neutral-400 max-w-2xl mx-auto">Browse our extensive selection of automotive parts</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories.map((category, index) => (
+            {allCategories.map((category, index) => (
               <div
                 key={category.slug}
                 className="animate-fade-in-up"

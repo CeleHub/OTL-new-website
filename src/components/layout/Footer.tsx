@@ -14,6 +14,7 @@ export default function Footer() {
       { name: 'About Us', href: '/about' },
       { name: 'Contact', href: '/contact' },
       { name: 'FAQ', href: '/faq' },
+      { name: 'Admin Portal', href: '/admin/login' },
     ],
     support: [
       { name: 'Shipping Policy', href: '/shipping' },

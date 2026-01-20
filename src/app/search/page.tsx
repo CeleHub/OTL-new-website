@@ -6,12 +6,13 @@ import { Suspense } from 'react'
 import { useState, useMemo, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { products } from '@/lib/data/products'
+import { getProducts } from '@/lib/data/database-client'
 import ProductCard from '@/components/products/ProductCard'
 import Breadcrumbs from '@/components/ui/Breadcrumbs'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import { debounce } from '@/lib/utils'
+import { Product } from '@/types'
 
 const quickQueries = ['Bushing', 'Engine mount', 'Brake rotor', 'Seat cushion']
 
@@ -19,6 +20,22 @@ function SearchContent() {
   const searchParams = useSearchParams()
   const [query, setQuery] = useState(searchParams.get('q') || '')
   const [debouncedQuery, setDebouncedQuery] = useState(query)
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const data = await getProducts()
+        setProducts(data)
+      } catch (error) {
+        console.error('Error loading products:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadProducts()
+  }, [])
 
   useEffect(() => {
     const handler = debounce((value: string) => {
@@ -52,7 +69,7 @@ function SearchContent() {
         return true
       return false
     })
-  }, [debouncedQuery])
+  }, [debouncedQuery, products])
 
   return (
     <div className="relative overflow-hidden">
@@ -109,7 +126,11 @@ function SearchContent() {
           )}
         </section>
 
-        {!debouncedQuery ? (
+        {loading ? (
+          <div className="glass-dark rounded-3xl border border-white/10 p-12 text-center">
+            <p className="text-neutral-400">Loading products...</p>
+          </div>
+        ) : !debouncedQuery ? (
           <div className="glass-dark rounded-3xl border border-white/10 p-12 text-center space-y-4">
             <div className="text-6xl">🔎</div>
             <h2 className="text-2xl font-semibold text-white">Start your discovery</h2>
