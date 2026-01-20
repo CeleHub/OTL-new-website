@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
@@ -75,6 +76,15 @@ export default function AdminLoginPage() {
           <Button type="submit" size="lg" className="w-full" loading={loading}>
             Sign In
           </Button>
+
+          <div className="text-center">
+            <Link
+              href="/admin/forgot-password"
+              className="text-sm text-primary-400 hover:text-primary-300 transition-colors"
+            >
+              Forgot your password?
+            </Link>
+          </div>
         </form>
       </div>
     </div>

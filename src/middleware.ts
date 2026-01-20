@@ -44,11 +44,14 @@ export async function middleware(request: NextRequest) {
           data: { user },
         } = await supabase.auth.getUser()
 
-        // Allow access to login page
-        if (request.nextUrl.pathname === '/admin/login') {
-          if (user) {
+        // Allow access to public admin pages (login, forgot password, reset password)
+        const publicAdminPages = ['/admin/login', '/admin/forgot-password', '/admin/reset-password']
+        if (publicAdminPages.includes(request.nextUrl.pathname)) {
+          // If user is already logged in and trying to access login/forgot password, redirect to dashboard
+          if (user && (request.nextUrl.pathname === '/admin/login' || request.nextUrl.pathname === '/admin/forgot-password')) {
             return NextResponse.redirect(new URL('/admin', request.url))
           }
+          // Allow access to these pages without authentication
           return response
         }
 
@@ -57,12 +60,13 @@ export async function middleware(request: NextRequest) {
           return NextResponse.redirect(new URL('/admin/login', request.url))
         }
       } catch (authError) {
-        // If auth check fails, redirect to login for safety
+        // If auth check fails, allow public pages, otherwise redirect to login
         console.error('Auth check failed in middleware:', authError)
-        if (request.nextUrl.pathname !== '/admin/login') {
-          return NextResponse.redirect(new URL('/admin/login', request.url))
+        const publicAdminPages = ['/admin/login', '/admin/forgot-password', '/admin/reset-password']
+        if (publicAdminPages.includes(request.nextUrl.pathname)) {
+          return response
         }
-        return response
+        return NextResponse.redirect(new URL('/admin/login', request.url))
       }
     }
 
