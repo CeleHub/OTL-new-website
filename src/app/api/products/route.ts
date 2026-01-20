@@ -13,6 +13,17 @@ export async function GET(request: Request) {
     const inStock = searchParams.get('inStock')
     const search = searchParams.get('search')
 
+    // Convert category slug to category ID if provided
+    let categoryId = null
+    if (category) {
+      const { data: categoryData } = await supabase
+        .from('categories')
+        .select('id')
+        .eq('slug', category)
+        .single()
+      categoryId = categoryData?.id || null
+    }
+
     // Build query
     let query = supabase
       .from('products')
@@ -46,8 +57,8 @@ export async function GET(request: Request) {
       `)
 
     // Apply filters
-    if (category) {
-      query = query.eq('category_id', category)
+    if (categoryId) {
+      query = query.eq('category_id', categoryId)
     }
 
     if (brand) {
