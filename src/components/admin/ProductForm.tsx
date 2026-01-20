@@ -263,6 +263,7 @@ export default function ProductForm({ product, categories }: ProductFormProps) {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
             {productImages.map((url, index) => (
               <div key={index} className="relative group">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={url}
                   alt={`Product image ${index + 1}`}

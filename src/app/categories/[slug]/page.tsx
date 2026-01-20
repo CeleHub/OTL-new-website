@@ -55,7 +55,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
     }
 
     return filtered
-  }, [params.slug, sortBy])
+  }, [params.slug, sortBy, products])
 
   return (
     <div className="relative overflow-hidden">

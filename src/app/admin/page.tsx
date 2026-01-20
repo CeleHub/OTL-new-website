@@ -21,6 +21,13 @@ export default async function AdminDashboard() {
     .order('created_at', { ascending: false })
     .limit(5)
 
+  // Type assertion for recent products
+  const recentProductsList = (recentProducts || []) as Array<{
+    id: string
+    name: string
+    created_at: string
+  }>
+
   return (
     <div className="space-y-8">
       <div>
@@ -89,11 +96,11 @@ export default async function AdminDashboard() {
       </div>
 
       {/* Recent Products */}
-      {recentProducts && recentProducts.length > 0 && (
+      {recentProductsList && recentProductsList.length > 0 && (
         <div className="glass-dark rounded-2xl border border-white/10 p-6">
           <h2 className="text-xl font-semibold text-white mb-4">Recent Products</h2>
           <div className="space-y-2">
-            {recentProducts.map((product) => (
+            {recentProductsList.map((product) => (
               <Link
                 key={product.id}
                 href={`/admin/products/${product.id}`}

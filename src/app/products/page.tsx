@@ -65,7 +65,7 @@ export default function ProductsPage() {
     }
 
     return filtered
-  }, [filters, sortBy])
+  }, [filters, sortBy, products])
 
   return (
     <div className="relative overflow-hidden">
