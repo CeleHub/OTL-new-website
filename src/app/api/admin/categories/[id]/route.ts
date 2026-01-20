@@ -23,11 +23,11 @@ export async function PUT(
     const { data: category, error } = await supabase
       .from('categories')
       .update({
-        name,
-        slug,
-        description: description || null,
-        image: image || null,
-      })
+        name: name as string,
+        slug: slug as string,
+        description: (description || null) as string | null,
+        image: (image || null) as string | null,
+      } as any)
       .eq('id', params.id)
       .select()
       .single()
