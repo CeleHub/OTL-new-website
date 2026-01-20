@@ -63,12 +63,14 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-neutral-950 via-neutral-950/95 to-neutral-950" />
 
       <div className="container py-10 space-y-10 relative z-10">
-        <Breadcrumbs
-          items={[
-            { label: 'Categories', href: '/categories' },
-            { label: category.name, href: `/categories/${category.slug}` },
-          ]}
-        />
+        {category && (
+          <Breadcrumbs
+            items={[
+              { label: 'Categories', href: '/categories' },
+              { label: category.name, href: `/categories/${category.slug}` },
+            ]}
+          />
+        )}
 
         <header className="space-y-4">
           {category && (

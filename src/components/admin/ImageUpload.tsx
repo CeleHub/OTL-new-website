@@ -89,15 +89,16 @@ export default function ImageUpload({
             className="hidden"
             disabled={uploading}
           />
-          <Button
-            type="button"
-            variant="outline"
-            size="md"
-            disabled={uploading}
-            as="span"
-          >
-            {uploading ? 'Uploading...' : 'Choose Image'}
-          </Button>
+          <span className="inline-block">
+            <Button
+              type="button"
+              variant="outline"
+              size="md"
+              disabled={uploading}
+            >
+              {uploading ? 'Uploading...' : 'Choose Image'}
+            </Button>
+          </span>
         </label>
 
         {preview && (

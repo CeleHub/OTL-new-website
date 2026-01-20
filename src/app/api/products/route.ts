@@ -27,7 +27,9 @@ export async function GET(request: Request) {
         console.warn(`Category lookup failed for slug "${category}":`, categoryError.message)
         categoryId = null
       } else {
-        categoryId = categoryData?.id || null
+        // Type assertion for category data
+        const category = categoryData as { id: string } | null
+        categoryId = category?.id || null
       }
     }
 
@@ -91,8 +93,11 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
+    // Type assertion for products data
+    const productsData = (data || []) as any[]
+
     // Transform data to match frontend Product type
-    const products = data?.map((product: any) => ({
+    const products = productsData.map((product: any) => ({
       id: product.id,
       name: product.name,
       partNumber: product.part_number,

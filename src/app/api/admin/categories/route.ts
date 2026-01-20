@@ -17,8 +17,9 @@ export async function POST(request: Request) {
     const body = await request.json()
     const { name, slug, description, image } = body
 
-    const { data: category, error } = await supabase
-      .from('categories')
+    // Type assertion needed due to Supabase type inference limitations
+    const { data: category, error } = await (supabase
+      .from('categories') as any)
       .insert({
         name,
         slug,

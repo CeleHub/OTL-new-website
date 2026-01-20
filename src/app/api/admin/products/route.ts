@@ -30,8 +30,9 @@ export async function POST(request: Request) {
     } = body
 
     // Insert product
-    const { data: product, error: productError } = await supabase
-      .from('products')
+    // Type assertion needed due to Supabase type inference limitations
+    const { data: product, error: productError } = await (supabase
+      .from('products') as any)
       .insert({
         name,
         part_number,
@@ -63,8 +64,8 @@ export async function POST(request: Request) {
         }))
 
       if (specs.length > 0) {
-        const { error: specError } = await supabase
-          .from('product_specifications')
+        const { error: specError } = await (supabase
+          .from('product_specifications') as any)
           .insert(specs)
 
         if (specError) {
@@ -87,8 +88,8 @@ export async function POST(request: Request) {
         }))
 
       if (compat.length > 0) {
-        const { error: compatError } = await supabase
-          .from('product_compatibility')
+        const { error: compatError } = await (supabase
+          .from('product_compatibility') as any)
           .insert(compat)
 
         if (compatError) {

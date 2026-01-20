@@ -33,8 +33,9 @@ export async function PUT(
     } = body
 
     // Update product
-    const { data: product, error: productError } = await supabase
-      .from('products')
+    // Type assertion needed due to Supabase type inference limitations
+    const { data: product, error: productError } = await (supabase
+      .from('products') as any)
       .update({
         name,
         part_number,
@@ -73,8 +74,8 @@ export async function PUT(
         }))
 
       if (specs.length > 0) {
-        const { error: specError } = await supabase
-          .from('product_specifications')
+        const { error: specError } = await (supabase
+          .from('product_specifications') as any)
           .insert(specs)
 
         if (specError) {
@@ -97,8 +98,8 @@ export async function PUT(
         }))
 
       if (compat.length > 0) {
-        const { error: compatError } = await supabase
-          .from('product_compatibility')
+        const { error: compatError } = await (supabase
+          .from('product_compatibility') as any)
           .insert(compat)
 
         if (compatError) {

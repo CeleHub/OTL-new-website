@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
-import { Database } from '@/lib/supabase/types'
 
 export async function PUT(
   request: Request,
@@ -21,16 +20,15 @@ export async function PUT(
     const body = await request.json()
     const { name, slug, description, image } = body
 
-    const updateData: Database['public']['Tables']['categories']['Update'] = {
-      name,
-      slug,
-      description: description || null,
-      image: image || null,
-    }
-
-    const { data: category, error } = await supabase
-      .from('categories')
-      .update(updateData)
+    // Type assertion needed due to Supabase type inference limitations
+    const { data: category, error } = await (supabase
+      .from('categories') as any)
+      .update({
+        name,
+        slug,
+        description: description || null,
+        image: image || null,
+      })
       .eq('id', params.id)
       .select()
       .single()

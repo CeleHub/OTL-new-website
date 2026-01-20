@@ -28,8 +28,9 @@ export async function POST(request: Request) {
       .eq('product_id', productId)
 
     // Insert new images
-    const { error } = await supabase
-      .from('product_images')
+    // Type assertion needed due to Supabase type inference limitations
+    const { error } = await (supabase
+      .from('product_images') as any)
       .insert(images)
 
     if (error) {

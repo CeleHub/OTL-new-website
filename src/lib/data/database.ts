@@ -31,7 +31,9 @@ export async function getProducts(filters?: {
         console.warn(`Category lookup failed for slug "${filters.category}":`, categoryError.message)
         categoryId = null
       } else {
-        categoryId = category?.id || null
+        // Type assertion for category data
+        const catData = category as { id: string } | null
+        categoryId = catData?.id || null
       }
     }
 
@@ -172,28 +174,57 @@ export async function getProduct(id: string): Promise<Product | null> {
       return null
     }
 
+    // Type assertion for product data with relations
+    const productData = data as any & {
+      product_images?: Array<{
+        id: string
+        url: string
+        alt_text: string | null
+        display_order: number
+      }>
+      product_specifications?: Array<{
+        id: string
+        spec_key: string
+        spec_value: string
+        display_order: number
+      }>
+      product_compatibility?: Array<{
+        id: string
+        make: string
+        model: string
+        year_start: number
+        year_end: number
+        engine_type: string | null
+      }>
+      categories?: {
+        id: string
+        slug: string
+        name: string
+      }
+    }
+
     // Transform to match Product type
     return {
-      id: data.id,
-      name: data.name,
-      partNumber: data.part_number,
-      oemNumber: data.oem_number,
-      category: data.categories?.slug || '',
-      brand: data.brand,
-      price: Number(data.price),
-      description: data.description,
-      inStock: data.in_stock,
-      featured: data.featured,
-      images: data.product_images
+      id: productData.id,
+      name: productData.name,
+      partNumber: productData.part_number,
+      oemNumber: productData.oem_number,
+      category: productData.categories?.slug || '',
+      brand: productData.brand,
+      price: Number(productData.price),
+      description: productData.description,
+      inStock: productData.in_stock,
+      featured: productData.featured,
+      images: productData.product_images
         ?.sort((a: any, b: any) => a.display_order - b.display_order)
         .map((img: any) => img.url) || [],
-      specifications: data.product_specifications
+      specifications: productData.product_specifications
         ?.sort((a: any, b: any) => a.display_order - b.display_order)
         .reduce((acc: any, spec: any) => {
           acc[spec.spec_key] = spec.spec_value
           return acc
         }, {}) || {},
-      compatibility: data.product_compatibility?.map((comp: any) => ({
+      compatibility: productData.product_compatibility?.map((comp: any) => ({
         make: comp.make,
         model: comp.model,
         yearStart: comp.year_start,
