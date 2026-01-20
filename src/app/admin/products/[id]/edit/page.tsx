@@ -48,21 +48,45 @@ export default async function EditProductPage({
     .select('id, slug, name')
     .order('name')
 
+  // Type assertion for product with relations
+  const productWithRelations = product as any & {
+    product_images?: Array<{
+      id: string
+      url: string
+      alt_text: string | null
+      display_order: number
+    }>
+    product_specifications?: Array<{
+      id: string
+      spec_key: string
+      spec_value: string
+      display_order: number
+    }>
+    product_compatibility?: Array<{
+      id: string
+      make: string
+      model: string
+      year_start: number
+      year_end: number
+      engine_type: string | null
+    }>
+  }
+
   // Transform product data for form
   const productData = {
-    id: product.id,
-    name: product.name,
-    part_number: product.part_number,
-    oem_number: product.oem_number,
-    category_id: product.category_id,
-    brand: product.brand,
-    price: product.price,
-    description: product.description,
-    in_stock: product.in_stock,
-    featured: product.featured,
-    images: (product.product_images as any[])?.sort((a: any, b: any) => a.display_order - b.display_order) || [],
-    specifications: (product.product_specifications as any[])?.sort((a: any, b: any) => a.display_order - b.display_order) || [],
-    compatibility: (product.product_compatibility as any[]) || [],
+    id: productWithRelations.id,
+    name: productWithRelations.name,
+    part_number: productWithRelations.part_number,
+    oem_number: productWithRelations.oem_number,
+    category_id: productWithRelations.category_id,
+    brand: productWithRelations.brand,
+    price: productWithRelations.price,
+    description: productWithRelations.description,
+    in_stock: productWithRelations.in_stock,
+    featured: productWithRelations.featured,
+    images: productWithRelations.product_images?.sort((a, b) => a.display_order - b.display_order) || [],
+    specifications: productWithRelations.product_specifications?.sort((a, b) => a.display_order - b.display_order) || [],
+    compatibility: productWithRelations.product_compatibility || [],
   }
 
   return (
