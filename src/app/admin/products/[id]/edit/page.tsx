@@ -50,10 +50,19 @@ export default async function EditProductPage({
 
   // Transform product data for form
   const productData = {
-    ...product,
-    images: product.product_images?.sort((a: any, b: any) => a.display_order - b.display_order) || [],
-    specifications: product.product_specifications?.sort((a: any, b: any) => a.display_order - b.display_order) || [],
-    compatibility: product.product_compatibility || [],
+    id: product.id,
+    name: product.name,
+    part_number: product.part_number,
+    oem_number: product.oem_number,
+    category_id: product.category_id,
+    brand: product.brand,
+    price: product.price,
+    description: product.description,
+    in_stock: product.in_stock,
+    featured: product.featured,
+    images: (product.product_images as any[])?.sort((a: any, b: any) => a.display_order - b.display_order) || [],
+    specifications: (product.product_specifications as any[])?.sort((a: any, b: any) => a.display_order - b.display_order) || [],
+    compatibility: (product.product_compatibility as any[]) || [],
   }
 
   return (
