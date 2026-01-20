@@ -84,8 +84,8 @@ export default async function EditProductPage({
     description: productWithRelations.description,
     in_stock: productWithRelations.in_stock,
     featured: productWithRelations.featured,
-    images: productWithRelations.product_images?.sort((a, b) => a.display_order - b.display_order) || [],
-    specifications: productWithRelations.product_specifications?.sort((a, b) => a.display_order - b.display_order) || [],
+    images: productWithRelations.product_images?.sort((a: any, b: any) => a.display_order - b.display_order) || [],
+    specifications: productWithRelations.product_specifications?.sort((a: any, b: any) => a.display_order - b.display_order) || [],
     compatibility: productWithRelations.product_compatibility || [],
   }
 
